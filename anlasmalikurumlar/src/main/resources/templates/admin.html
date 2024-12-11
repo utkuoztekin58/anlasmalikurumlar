@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Style for the logout button to place it at the top-right corner of the screen */
+        .btn-logout {
+            position: fixed; /* Fixes the button's position relative to the viewport */
+            top: 20px; /* Distance from the top of the viewport */
+            right: 20px; /* Distance from the right of the viewport */
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+    </style>
+</head>
+<body>
+<!-- Çıkış yap butonunu sağ üst köşeye yerleştirin -->
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container mt-5">
+    <h1>Admin Paneli</h1>
+
+    <div class="mt-4">
+        <a href="/companies" class="btn btn-primary btn-lg">Şirketler</a>
+        <a href="/categories/" class="btn btn-secondary btn-lg">Kategoriler</a>
+        <a href="/communications" class="btn btn-success btn-lg">İletişim Bilgileri</a>
+        <a href="/documents" class="btn btn-warning btn-lg">Döküman Bilgileri</a>
+    </div>
+</div>
+</body>
+</html>

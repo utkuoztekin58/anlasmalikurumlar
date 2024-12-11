@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .container {
+            padding-bottom: 20px;
+        }
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+        .btn-logout {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+    </style>
+</head>
+<body>
+<!-- Geri butonunu sol üst köşeye yerleştirin -->
+<a href="http://localhost:8080/documents" class="btn btn-secondary btn-back">Geri</a>
+
+<!-- Çıkış Yap butonunu sağ üst köşeye yerleştirin -->
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container">
+    <h2>Edit Document</h2>
+    <form action="/documents/update" method="post">
+        <input type="hidden" name="id" th:value="${document.id}">
+        <div class="form-group">
+            <label for="name">Document Name</label>
+            <input type="text" id="name" name="name" class="form-control" th:value="${document.name}" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Document Content</label>
+            <textarea id="content" name="content" class="form-control" required th:text="${document.content}"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="file_extention">File Extension</label>
+            <input type="text" id="file_extention" name="file_extention" class="form-control" th:value="${document.file_extention}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    </form>
+</div>
+</body>
+</html>

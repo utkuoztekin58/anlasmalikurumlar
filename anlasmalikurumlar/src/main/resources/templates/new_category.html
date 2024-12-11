@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Category</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { padding-top: 20px; }
+        .container { width: 50%; }
+
+        /* Style for the back and logout buttons */
+        .btn-back {
+            position: fixed; /* Fixes the button's position relative to the viewport */
+            top: 20px; /* Distance from the top of the viewport */
+            left: 20px; /* Distance from the left of the viewport */
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+
+        .btn-logout {
+            position: fixed; /* Fixes the button's position relative to the viewport */
+            top: 20px; /* Distance from the top of the viewport */
+            right: 20px; /* Distance from the right of the viewport */
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+    </style>
+</head>
+<body>
+<!-- Geri butonunu sol üst köşeye yerleştirin -->
+<a href="/categories/" class="btn btn-secondary btn-back">Geri</a>
+
+<!-- Çıkış Yap butonunu sağ üst köşeye yerleştirin -->
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container">
+    <h2>New Category</h2>
+    <form action="/categories/save" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+</body>
+</html>

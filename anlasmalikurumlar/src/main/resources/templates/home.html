@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şirketleri Filtrele</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Şirketleri Filtrele</h1>
+    <form action="#" th:action="@{/companies/filter}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="categoryId">Kategori Seçin</label>
+            <select id="categoryId" name="categoryId" class="form-control">
+                <option value="">Tüm Kategoriler</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="discountPercentage">İndirim Yüzdesi</label>
+            <input type="number" id="discountPercentage" name="discountPercentage" class="form-control" placeholder="İndirim yüzdesini girin">
+        </div>
+        <div class="form-group">
+            <label for="endDate">Tarihi</label>
+            <input type="date" id="endDate" name="endDate" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Filtrele</button>
+    </form>
+
+
+    <div class="mt-4">
+        <a href="http://localhost:8080/companies" class="btn btn-secondary">Bütün Şirketleri Göster</a>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

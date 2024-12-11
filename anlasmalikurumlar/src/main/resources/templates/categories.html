@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .btn-logout {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .delete-confirm {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<a href="http://localhost:8080/admin" class="btn btn-secondary btn-back">Geri</a>
+
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container mt-4">
+    <h1>Kategoriler</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <div class="mb-3">
+        <a href="/categories/new" class="btn btn-primary">Yeni Kategori Ekle</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>İsim</th>
+            <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td>
+                <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-warning">Düzenle</a>
+                <a href="#" class="btn btn-danger" th:attr="data-id=${category.id}" >Sil</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Delete Confirmation Form -->
+<div id="deleteConfirm" class="delete-confirm">
+    <p>Bu kategoriyi silmek istediğinize emin misiniz?</p>
+    <form id="confirmDeleteForm" method="post">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-danger">Sil</button>
+        <button type="button" class="btn btn-secondary" id="cancelDelete">İptal</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var $deleteConfirm = $('#deleteConfirm');
+        var $confirmDeleteForm = $('#confirmDeleteForm');
+        var $cancelDelete = $('#cancelDelete');
+
+        $('.btn-danger[data-id]').on('click', function(event) {
+            event.preventDefault();
+            var categoryId = $(this).data('id');
+
+            // Show confirmation form
+            $deleteConfirm.show();
+            $confirmDeleteForm.attr('action', '/categories/delete/' + categoryId);
+        });
+
+        $cancelDelete.on('click', function() {
+            // Hide confirmation form
+            $deleteConfirm.hide();
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

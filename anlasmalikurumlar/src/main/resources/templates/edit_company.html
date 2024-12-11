@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Company</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .container {
+            padding-bottom: 20px;
+        }
+        .form-margin {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Edit Company</h2>
+
+    <a href="javascript:history.back()" class="btn btn-secondary mb-3">Geri</a>
+
+    <form action="/companies/update" method="post">
+        <input type="hidden" id="id" name="id" th:value="${companiesDTO.id}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${companiesDTO.name}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" th:value="${companiesDTO.email}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="discountPercentage">Discount Percentage</label>
+            <input type="number" class="form-control" id="discountPercentage" name="discountPercentage"
+                   th:value="${companiesDTO.discountPercentage}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${companiesDTO.startDate}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${companiesDTO.endDate}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryId">Category</label>
+            <select class="form-control" id="categoryId" name="categoryId" required>
+                <option th:each="category : ${categories}" th:value="${category.id}"
+                        th:text="${category.name}"
+                        th:selected="${category.id == companiesDTO.categoryId}">Category Name
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Communication</title>
+    <!-- Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .container {
+            padding-bottom: 20px;
+        }
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+        .btn-logout {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+    </style>
+</head>
+<body>
+<!-- Geri butonunu sol üst köşeye yerleştirin -->
+<a href="http://localhost:8080/communications" class="btn btn-secondary btn-back">Geri</a>
+
+<!-- Çıkış Yap butonunu sağ üst köşeye yerleştirin -->
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container">
+    <h2>Edit Communication</h2>
+    <form th:action="@{/communications/update}" th:object="${communicationDTO}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" th:field="*{address}" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="company_id">Company:</label>
+            <select id="company_id" th:field="*{company_id}" class="form-control">
+                <option th:each="company : ${companies}" th:value="${company.id}" th:text="${company.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Company</title>
+    <!-- Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <style>
+        /* Custom styling */
+        body { padding-top: 20px; }
+        .container { padding-bottom: 20px; }
+        .form-margin { margin-bottom: 10px; }
+        .alert { margin-top: 20px; }
+
+        /* Style for the back and logout buttons */
+        .btn-back {
+            position: fixed; /* Fixes the button's position relative to the viewport */
+            top: 20px; /* Distance from the top of the viewport */
+            left: 20px; /* Distance from the left of the viewport */
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+
+        .btn-logout {
+            position: fixed; /* Fixes the button's position relative to the viewport */
+            top: 20px; /* Distance from the top of the viewport */
+            right: 20px; /* Distance from the right of the viewport */
+            z-index: 1000; /* Ensure it is on top of other elements */
+        }
+    </style>
+</head>
+<body>
+<!-- Geri butonunu sol üst köşeye yerleştirin -->
+<a href="http://localhost:8080/companies" class="btn btn-secondary btn-back">Geri</a>
+
+<!-- Çıkış Yap butonunu sağ üst köşeye yerleştirin -->
+<form action="/logout" method="post" class="btn-logout" style="display: inline;">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+</form>
+
+<div class="container">
+    <h2>New Company</h2>
+
+    <!-- Hata ve Başarı Mesajları -->
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}" style="display: block;"></div>
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}" style="display: block;"></div>
+
+    <!-- Form for creating a new company -->
+    <form action="/companies/save" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="discountPercentage">Discount Percentage</label>
+            <input type="number" class="form-control" id="discountPercentage" name="discountPercentage" required>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryId">Category</label>
+            <select class="form-control" id="categoryId" name="categoryId" required>
+                <option value="" disabled selected>Select a category</option>
+                <!-- Correctly use `th:each` to iterate over categories -->
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    </form>
+</div>
+</body>
+</html>

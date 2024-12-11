@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şirketler</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://www.btk.gov.tr/Content/images/background.jpg'); /* BTK arka plan resminin URL'si */
+            background-size: cover;
+            background-attachment: fixed;
+            color: #0033a0; /* BTK'nın koyu mavi rengi */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Beyaz arka plan rengi ve biraz şeffaflık */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .btn-primary {
+            background-color: #0033a0; /* BTK'nın koyu mavi rengi */
+            border-color: #0033a0;
+        }
+        .btn-primary:hover {
+            background-color: #002a80; /* Daha koyu bir mavi tonunda hover efekti */
+            border-color: #002a80;
+        }
+        .btn-danger {
+            background-color: #d9534f; /* Bootstrap'ın varsayılan kırmızı tonu */
+            border-color: #d9534f;
+        }
+        .btn-danger:hover {
+            background-color: #c9302c; /* Daha koyu kırmızı tonunda hover efekti */
+            border-color: #c9302c;
+        }
+        .list-group-item {
+            background-color: #f8f9fa; /* Hafif gri arka plan rengi */
+        }
+        .logo {
+            max-width: 150px; /* Logonun maksimum genişliği */
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="images.png" alt="BTK Logo" class = "logo">
+    <h1 class="mt-5">Anlaşmalı Şirketler</h1>
+
+    <!-- Logout Butonu -->
+    <form action="/logout" method="post" style="display: inline;">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-danger float-right">Çıkış Yap</button>
+    </form>
+
+    <form action="/user/companies/filter" method="post" class="mt-4">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="category">Kategori Seç</label>
+                <select id="category" name="categoryId" class="form-control">
+                    <option value="">Tüm Kategoriler</option>
+                    <th:block th:each="category : ${categories}">
+                        <option th:value="${category.id}" th:text="${category.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="discount">İndirim Yüzdesi</label>
+                <input type="number" id="discount" name="discountPercentage" class="form-control" placeholder="İndirim Yüzdesi">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="endDate">Son Tarih</label>
+                <input type="date" id="endDate" name="endDate" class="form-control">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Filtrele</button>
+    </form>
+
+    <h2 class="mt-5">Şirket Listesi</h2>
+    <div class="list-group mt-3">
+        <th:block th:each="company : ${companies}">
+            <a href="#" class="list-group-item list-group-item-action">
+                <h5 class="mb-1" th:text="${company.name}">Şirket Adı</h5>
+                <small th:text="'İndirim Yüzdesi: ' + ${company.discountPercentage} + '%'">İndirim Yüzdesi</small>
+            </a>
+        </th:block>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
